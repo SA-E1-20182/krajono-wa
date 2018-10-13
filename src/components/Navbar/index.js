@@ -2,32 +2,34 @@ import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
 
 export default class Navbar extends Component {
-  state = { activeItem: 'home' }
+  constructor() {
+    super();
 
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+  
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
-
     return (
       <div>
         <Menu pointing secondary>
-          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
+          <Menu.Item name='home' onClick={this.handleItemClick} />
           <Menu.Item
             name='messages'
-            active={activeItem === 'messages'}
             onClick={this.handleItemClick}
           />
           <Menu.Item
             name='friends'
-            active={activeItem === 'friends'}
             onClick={this.handleItemClick}
           />
           <Menu.Menu position='right'>
             <Menu.Item
+              name='perfil'
+              onClick={() => window.location.replace('/')}
+            />
+            <Menu.Item
               name='logout'
-              active={activeItem === 'logout'}
-              onClick={this.handleItemClick}
             />
           </Menu.Menu>
         </Menu>
