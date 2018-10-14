@@ -13,7 +13,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <div>
-        <Menu pointing secondary>
+        <Menu size="huge" pointing secondary>
           <Menu.Item name='home' onClick={this.handleItemClick} />
           <Menu.Item
             name='messages'

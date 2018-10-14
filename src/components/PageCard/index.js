@@ -1,9 +1,9 @@
 import React from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 const PageCard = () => (
   <Card
-    href="/project/1">
+    href="/project/1/page/1">
     <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
     <Card.Content>
       <Card.Meta>
