@@ -4,12 +4,12 @@ import ActionButtons from './components/ActionButtons';
 
 export default class Page extends React.Component {
     state = {
+        loading: true,
         project: {}
     }
 
     componentWillMount() {
-        const { id } = this.props.match.params;
-        console.log(id);
+        const { id, num } = this.props.match.params;
 
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
@@ -18,12 +18,20 @@ export default class Page extends React.Component {
         })
         .then(r => r.json())
         .then(data => {
-            this.setState({ project: data.data.projectByCode });
+            if(!data.data)
+                window.location.replace('/404');
+            else {
+                const project = data.data.projectByCode;
+                document.title = `Página ${num} - ${project.name} - Krajono`
+                this.setState({ loading: false, project });
+            }
         });
     }
+
     render() {
+        
         const {id, num} = this.props.match.params;
-        const {project} = this.state;
+        const {loading, project} = this.state;
         const currentPage = parseInt(num);
         
         return (
@@ -35,7 +43,7 @@ export default class Page extends React.Component {
                 </h1>
 
                 <ActionButtons project={id} currentPage={currentPage} />
-                <PageContainer />
+                {loading ? "" : <PageContainer />}
                 <ActionButtons project={id} currentPage={currentPage} />
             </div>
         )

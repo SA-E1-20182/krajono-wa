@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, TextArea, Button, Dropdown } from 'semantic-ui-react'
+import { Dropdown } from 'semantic-ui-react'
 
 const genreOptions = [  // TODO: there ought to be some collection of these somewhere!
   { key: 'action', text: 'Acción', value: 'Acción' },
@@ -92,40 +92,6 @@ export default class CreateProject extends React.Component {
                         
                         <button className="ui button" type="submit">Submit</button>
                     </form>
-                    {/* <Form>
-                        <Form.Group>
-                        <Form.Field
-                            width={10}
-                            id='form-input-control-first-name'
-                            control={Input}
-                            label='Nombre del proyecto'
-                            placeholder='Nombre del proyecto'
-                        />
-                        <Form.Field
-                            width={6}
-                            control={Select}
-                            options={genreOptions}
-                            label={{ children: 'Género', htmlFor: 'form-select-control-genre' }}
-                            placeholder='Género'
-                            search
-                            searchInput={{ id: 'form-select-control-genre' }}
-                        />
-                        </Form.Group>
-                        
-                        <Form.Field
-                        id='form-textarea-control-description'
-                        control={TextArea}
-                        label='Descripción'
-                        placeholder='Descripción'
-                        />
-                        <Form.Field
-                        id='form-button-control-public'
-                        control={Button}
-                        color="violet"
-                        content='¡Listo!'
-                        onClick={this.createProject}
-                        />
-                    </Form> */}
                 </div>
             </div>
         );
