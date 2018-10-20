@@ -1,16 +1,38 @@
 import React from 'react';
 import ProjectCardList from '../../components/ProjectCardList';
 
-export default class Home extends React.Component { 
+export default class Home extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            projects: [],
+        }
+    }
+
+    componentWillMount() {
+        fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: '{ allProjects { id, name, genre, description } }' }),
+        })
+        .then(r => r.json())
+        .then(data => {
+            this.setState({ projects: data.data.allProjects });
+        });
+    }
+
     render() {
+        const { projects } = this.state;
+
         return (
             <div className="ui container" id="home">
-                <div className="ui segment">
+                <div className="ui segment">    
                     <h1 className="ui header">Bienvenido, user</h1>
                 </div>
 
                 <div className="ui segment">
-                    <ProjectCardList />    
+                    <ProjectCardList projects={projects} />    
                 </div>
             </div>
         );
