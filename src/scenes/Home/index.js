@@ -27,8 +27,13 @@ export default class Home extends React.Component {
 
         return (
             <div className="ui container" id="home">
-                <div className="ui segment">    
+                <div className="ui violet padded segment">    
                     <h1 className="ui header">Bienvenido, user</h1>
+
+                    <button className="ui basic violet button" onClick={() => window.location.replace('/project/create')}>
+                        <i className="plus circle icon"></i>
+                        Crear un proyecto
+                    </button>
                 </div>
 
                 <div className="ui segment">
