@@ -1,5 +1,6 @@
 import React from 'react';
 import PageContainer from '../../components/PageContainer';
+import CommentBox from '../../components/CommentBox';
 import ActionButtons from './components/ActionButtons';
 
 export default class Page extends React.Component { 
@@ -11,9 +12,10 @@ export default class Page extends React.Component {
                     Página 1
                     <div className="sub header">Novela gráfica</div>
                 </h1>
-                <ActionButtons />
+                {/* <ActionButtons /> */}
                 <PageContainer />
                 <ActionButtons />
+                <CommentBox />  
             </div>
         )
     }

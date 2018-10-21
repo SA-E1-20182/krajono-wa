@@ -9,15 +9,15 @@ export default class ActionButtons extends React.Component {
                     <i class="left chevron icon"></i>
                     Anterior
                 </button>
-                <button class="ui button">
+                {/* <button class="ui button">
                     <i class="plus circle icon"></i>
-                    Añadir comentario
-                </button>
+                    Ver comentarios
+                </button> */}
                 <button class="ui right labeled icon button">
                     Siguente
                     <i class="right chevron icon"></i>
                 </button>
-            </div>            
+            </div>          
         </div>
         );
     }
