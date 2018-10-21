@@ -1,12 +1,13 @@
 import React from 'react'
-// import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 export default class CommentForm extends React.Component { 
   render() {
       return (
-        <div className="commentForm">
-          Party Parrot time. I am a CommentForm.
-        </div>
+        <Form reply>
+          <Form.TextArea />
+          <Button content='Añadir comentario' labelPosition='left' icon='edit' primary />
+        </Form>
         );
   }
 }
