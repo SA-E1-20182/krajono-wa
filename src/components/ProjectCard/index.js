@@ -1,22 +1,22 @@
 import React from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 
-const ProjectCard = () => (
+const ProjectCard = (props) => (
   <Card
-    href="/project/1">
+    href={`/project/${props.project.id}`}>
     <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
     <Card.Content>
-      <Card.Header>Novela gráfica</Card.Header>
+      <Card.Header>{props.project.name}</Card.Header>
       <Card.Meta>
         <span className='date'>Joined in 2015</span>
       </Card.Meta>
-      <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+      <Card.Description>{props.project.description}</Card.Description>
     </Card.Content>
     <Card.Content extra>
-      <a>
+      <div>
         <Icon name='user' />
-        22 Friends
-      </a>
+        {props.project.genre}
+      </div>
     </Card.Content>
   </Card>
 )
