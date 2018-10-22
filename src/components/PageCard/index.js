@@ -9,7 +9,7 @@ const PageCard = () => (
       <Card.Meta>
         <span className='date'>página 1</span>
       </Card.Meta>
-      <Card.Description>Matthew is a musician living in Nashville.</Card.Description>
+      <Card.Description>Matthew is a muan living in Nashville.</Card.Description>
     </Card.Content>
   </Card>
 )
