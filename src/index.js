@@ -13,6 +13,7 @@ import Page from './scenes/Page';
 import CreateProject from './scenes/CreateProject';
 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import AddVersion from './scenes/AddVersion';
 ReactDOM.render(
     <BrowserRouter>
         <div id="app">
@@ -22,6 +23,8 @@ ReactDOM.render(
                     <Route exact path="/" component={Home} />
                     <Route exact path="/project/create" component={CreateProject} />
                     <Route exact path="/project/:id" component={Project} />
+                    <Route exact path="/version/add" component={AddVersion} />
+                    <Route exact path="/version/:id" component={Project} />
                     <Route exact path="/project/:id/page/:num" component={Page} />
                     <Route exact path="/404" component={NotFound} />
                     <Redirect to="/404" />

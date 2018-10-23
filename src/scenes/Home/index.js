@@ -34,6 +34,10 @@ export default class Home extends React.Component {
                         <i className="plus circle icon"></i>
                         Crear un proyecto
                     </button>
+                    <button className="ui basic violet button" onClick={() => window.location.replace('/version/add')}>
+                        <i className="plus circle icon"></i>
+                        Agregar una version
+                    </button>
                 </div>
 
                 <div className="ui segment">
