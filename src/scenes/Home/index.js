@@ -18,7 +18,8 @@ export default class Home extends React.Component {
         })
         .then(r => r.json())
         .then(data => {
-            this.setState({ projects: data.data.allProjects });
+            this.setState({ projects: data.allProjects });
+            // console.warn(xhr.responseText) ;
         });
     }
 
