@@ -15,8 +15,8 @@ export default class CommentList extends React.Component {t
         })
         .then(r => r.json())
         .then(data => {
-            console.log(data);
-            this.setState({ comments: data.data.allComments });
+            if(data.data)
+                this.setState({ comments: data.data.allComments });
         });
     }
 
@@ -36,7 +36,6 @@ export default class CommentList extends React.Component {t
         )
         return (
             <div className="commentList">
-                Todos los comentarios:
                 {commentsView}
             </div>
           );

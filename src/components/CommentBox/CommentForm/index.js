@@ -44,7 +44,7 @@ export default class CommentForm extends React.Component {
     return (
       <Form reply onSubmit={(e) => this.onSubmit(e)}>
         <Form.TextArea value={message} onChange={(e) => this.setState({ message: e.target.value })}/>
-        <Button content='Añadir comentario' labelPosition='left' icon='edit' primary />
+        <Button content='Añadir comentario' labelPosition='left' icon='edit' color="violet"/>
       </Form>
       );
   }

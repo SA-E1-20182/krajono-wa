@@ -18,7 +18,7 @@ export default class Navbar extends Component {
           <Menu.Menu position='right'>
             <Menu.Item
               name='perfil'
-              onClick={() => window.location.replace('/')}
+              onClick={() => window.location.replace('/author/1')}
             />
             <Menu.Item
               name='logout'

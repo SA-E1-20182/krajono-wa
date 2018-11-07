@@ -14,6 +14,7 @@ import CreateProject from './scenes/CreateProject';
 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import AddVersion from './scenes/AddVersion';
+import Profile from './scenes/Profile';
 ReactDOM.render(
     <BrowserRouter>
         <div id="app">
@@ -21,6 +22,7 @@ ReactDOM.render(
             <main>
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/author/:id" component={Profile} />
                     <Route exact path="/project/create" component={CreateProject} />
                     <Route exact path="/project/:id" component={Project} />
                     <Route exact path="/version/add" component={AddVersion} />
