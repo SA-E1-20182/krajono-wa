@@ -57,7 +57,6 @@ export default class AddVersion extends React.Component {
     }
     
     render() {
-        const { user_id } = this.state;
         return (
             <div className="ui container">
                 <div className="ui very padded segment">

@@ -11,20 +11,24 @@ export default class CreateProject extends React.Component {
     constructor() {
         super();
 
+
         this.state = {
             name: '',
             genre: '',
-            description: ''
+            description: '',
+            cover: null
         }
 
         this.createProject = this.createProject.bind(this);
-        this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleDropdownChange = this.handleDropdownChange.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
     }
 
     createProject(e) {
         e.preventDefault();
         const { name, genre, description } = this.state;
+        const author_id = "author_id";  // TODO:
         const query =  `mutation CreateProject($input: ProjectInput!) {
             createProject(project: $input) {
                 id
@@ -42,7 +46,7 @@ export default class CreateProject extends React.Component {
                 query,
                 variables: {
                     input: {
-                        name, genre, description
+                        name, genre, description, author_id
                     }
                 }
             })
@@ -65,8 +69,12 @@ export default class CreateProject extends React.Component {
         this.setState({ genre: value });
     }
 
+    handleFileChange(event) {
+        this.setState({ cover: event.target.files[0] });
+    }
+
     render() {
-        const { genre } = this.state;
+        const { genre, cover } = this.state;
         return (
             <div className="ui container">
                 <div className="ui very padded segment">
@@ -89,6 +97,12 @@ export default class CreateProject extends React.Component {
                             <label>Descripción</label>
                             <textarea name="description" placeholder="Descripción" rows="2" onChange={this.handleInputChange}></textarea>
                         </div>
+
+                        <div className="field">
+                            <input type="file" onChange={this.handleFileChange} />
+                            <img src={cover ? URL.createObjectURL(cover) : ""} alt=""/>
+                        </div>
+
                         
                         <button className="ui button" type="submit">Submit</button>
                     </form>

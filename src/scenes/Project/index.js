@@ -71,11 +71,17 @@ export default class Project extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown.Menu>
                     </Dropdown>
-
                 </div>
-                <h1 className="ui header">Proyecto: <i>{project.name}</i>
-                    <div className="sub header">creado el 03 de diciembre de 2018</div>
-                </h1>
+                
+                <div className="ui segment">
+                    <h1 className="ui header">Proyecto: <i>{project.name}</i>
+                        <div className="sub header">creado el 03 de diciembre de 2018</div>
+                    </h1>
+                    <button className="ui basic violet button" onClick={() => window.location.replace('/version/add')}>
+                        <i className="plus circle icon"></i>
+                        Agregar una version
+                    </button>
+                </div>
                 <PageCardList project={project} />
             </div>
         );

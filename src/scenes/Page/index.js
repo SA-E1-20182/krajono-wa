@@ -46,7 +46,8 @@ export default class Page extends React.Component {
                 <ActionButtons project={id} currentPage={currentPage} />
                 {loading ? "" : <PageContainer />}
                 <ActionButtons project={id} currentPage={currentPage} />
-                <CommentBox /> 
+                {/* TODO: not accurate -- must change for real values */}
+                <CommentBox versionId={id} imageId={num}/> 
             </div>
         )
     }
