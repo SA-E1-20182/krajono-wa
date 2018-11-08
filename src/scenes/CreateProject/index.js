@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react'
-import { post } from 'axios';
+// import axios, { post } from 'axios'
 
 const genreOptions = [  // TODO: there ought to be some collection of these somewhere!
   { key: 'action', text: 'Acción', value: 'Acción' },
@@ -24,7 +24,7 @@ export default class CreateProject extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.handleFileChange = this.handleFileChange.bind(this);
-        this.fileUpload = this.fileUpload.bind(this)
+        // this.fileUpload = this.fileUpload.bind(this)
     }
 
     createProject(e) {
@@ -60,22 +60,22 @@ export default class CreateProject extends React.Component {
 
             window.location.replace('/project/' + payload.id);
         })
-        this.fileUpload(cover).then((response)=>{
-          console.log(response.data);
-        })
+        // this.fileUpload(cover).then((response)=>{
+        //   console.log(response.data);
+        // })
     }
 
-    fileUpload(file){
-      const url = 'http://192.168.99.101:3003/image';
-      const formData = new FormData();
-      formData.append('file',file)
-      const config = {
-          headers: {
-              'content-type': 'multipart/form-data'
-          }
-      }
-      return  post(url, formData,config)
-    }
+    // fileUpload(file){
+    //   const url = 'http://192.168.99.101:3003/image';
+    //   const formData = new FormData();
+    //   formData.append('file',file)
+    //   const config = {
+    //       headers: {
+    //           'content-type': 'multipart/form-data'
+    //       }
+    //   }
+    //   return  post(url, formData,config)
+    // }
 
     handleInputChange(e) {
         const { name, value } = e.target;
