@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react'
-import axios, { post } from 'axios';
+import { post } from 'axios';
 
 const genreOptions = [  // TODO: there ought to be some collection of these somewhere!
   { key: 'action', text: 'Acción', value: 'Acción' },

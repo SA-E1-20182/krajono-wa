@@ -1,6 +1,5 @@
 import React from 'react';
 import PageCardList from '../../components/PageCardList';
-import { Dropdown } from 'semantic-ui-react';
 
 export default class Project extends React.Component {
     constructor() {
