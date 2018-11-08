@@ -62,20 +62,17 @@ export default class Project extends React.Component {
         const { project } = this.state;
 
         return (
-            <div className="ui container">
-                <div style={{float: 'right'}}>
-                    <Dropdown text='Configuración' icon='cog' floating labeled button className='violet icon'>
-                        <Dropdown.Menu>
-                            <Dropdown.Menu scrolling>
-                                {this.tagOptions.map(option => <Dropdown.Item key={option.value} {...option} />)}
-                            </Dropdown.Menu>
-                        </Dropdown.Menu>
-                    </Dropdown>
+            <div className="ui container">                
+                <div className="ui padded segment">
+                    <h1 className="ui header">Proyecto: <i>{project.name}</i>
+                        <div className="sub header">creado por <a href="/author/1">José Vitola</a> el 03 de diciembre de 2018</div>
+                    </h1>
+
+                <div className="ui violet labeled icon button" onClick={() => window.location.replace('/project/'+project.id+'/edit')}><i className="cog icon"></i> Editar proyecto</div>
+                <div className="ui basic red button" onClick={this.deleteProject}>Borrar proyecto</div>
 
                 </div>
-                <h1 className="ui header">Proyecto: <i>{project.name}</i>
-                    <div className="sub header">creado el 03 de diciembre de 2018</div>
-                </h1>
+                
                 <PageCardList project={project} />
             </div>
         );

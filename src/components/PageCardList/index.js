@@ -9,7 +9,6 @@ export default class PageCardList extends React.Component {
                 <PageCard projectId={id} page={1} />
                 <PageCard projectId={id} page={2} />
                 <PageCard projectId={id} page={3} />
-                <PageCard projectId={id} />
             </div>
         )
     }

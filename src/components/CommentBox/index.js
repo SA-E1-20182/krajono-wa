@@ -5,6 +5,7 @@ import './styles.css';
 
 export default class CommentBox extends React.Component { 
     render() {
+        const { versionId, imageId } = this.props;
         return (
             
             <div className="ui basic left aligned segment">
@@ -12,8 +13,8 @@ export default class CommentBox extends React.Component {
                 <h1 className="ui centered header">
                     Deja un comentario
                 </h1>
-                <div class="margin_comment">
-                    <CommentForm />
+                <div className="margin_comment">
+                    <CommentForm versionId={versionId} imageId={imageId} />
                     <CommentList /> 
                 </div>  
             </div>
