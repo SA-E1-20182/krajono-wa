@@ -145,7 +145,7 @@ export default class EditProject extends React.Component {
     }
 
     render() {
-        const { newPage, project } = this.state;
+        const { newPage, newCover, project } = this.state;
 
         return (
             <div className="ui container">
