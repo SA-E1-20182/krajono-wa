@@ -14,17 +14,46 @@ export default class Home extends React.Component {
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: '{ allProjects { id, name, genre, description } }' }),
+            body: JSON.stringify({ query: '{ allProjects { id, name, genre, description, cover_url, created_at } }' }),
         })
         .then(r => r.json())
         .then(data => {
-            this.setState({ projects: data.allProjects });
-            // console.warn(xhr.responseText) ;
+            let projects = data.data.allProjects;
+            this.setState({ projects });
+            
+            let codes = [];
+            projects.forEach(project => {
+                codes.push(isNaN(parseInt(project.cover_url)) ? 1 : 8);
+            });
+
+            const query =  `mutation CollectionOfImages($input: [Int!]) {
+                collectionOfImages(codes: $input)
+            }`;
+
+            fetch(process.env.REACT_APP_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    query,
+                    variables: {
+                        input: codes                        
+                    }
+                })
+            }).then(r => r.json())
+            .then(data => {
+                this.setState({covers: data.data.collectionOfImages})
+            });
         });
     }
 
     render() {
-        const { projects } = this.state;
+        const { projects, covers } = this.state;
+        console.log(projects);
+
+        // window.location.replace("/auth");
 
         return (
             <div className="ui container" id="home">
@@ -38,7 +67,7 @@ export default class Home extends React.Component {
                 </div>
 
                 <div className="ui segment">
-                    <ProjectCardList projects={projects} />    
+                    {projects && covers ? <ProjectCardList projects={projects} covers={covers} /> : ''}
                 </div>
             </div>
         );

@@ -4,11 +4,11 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 const ProjectCard = (props) => (
   <Card
     href={`/project/${props.project.id}`}>
-    <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' />
+    <Image src={props.cover} />
     <Card.Content>
       <Card.Header>{props.project.name}</Card.Header>
       <Card.Meta>
-        <span className='date'>Joined in 2015</span>
+        <span className='date'>{props.project.created_at}</span>
       </Card.Meta>
       <Card.Description>{props.project.description}</Card.Description>
     </Card.Content>

@@ -7,6 +7,7 @@ import './index.css';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Home from './scenes/Home';
+import Auth from './scenes/Auth';
 import Project from './scenes/Project';
 import NotFound from './scenes/NotFound';
 import Page from './scenes/Page';
@@ -16,6 +17,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import AddVersion from './scenes/AddVersion';
 import Profile from './scenes/Profile';
 import EditProject from './scenes/EditProject';
+
 ReactDOM.render(
     <BrowserRouter>
         <div id="app">
@@ -23,6 +25,7 @@ ReactDOM.render(
             <main>
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/auth" component={Auth} />
                     <Route exact path="/author/:id" component={Profile} />
                     <Route exact path="/project/create" component={CreateProject} />
                     <Route exact path="/project/:id" component={Project} />

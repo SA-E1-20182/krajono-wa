@@ -7,6 +7,7 @@ export default class Project extends React.Component {
 
         this.state = {
             project: {},
+            cover: null
         }
 
         this.deleteProject = this.deleteProject.bind(this);
@@ -49,17 +50,32 @@ export default class Project extends React.Component {
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: `{ projectByCode(code: ${id}) { id, name } }` }),
+            body: JSON.stringify({ query: `{ projectByCode(code: ${id}) { id, name, cover_url } }` }),
         })
         .then(r => r.json())
         .then(data => {
-            this.setState({ project: data.data.projectByCode });
+            const project = data.data.projectByCode;
+
+            this.setState({ project });
+
+            const { cover_url } = project;
+            
+            fetch(process.env.REACT_APP_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: `{ imageByCode(code: ${cover_url}) }` }),
+            })
+            .then(r => r.json())
+            .then(data => {
+                this.setState({ cover: data.data.imageByCode });
+            })
         });
     }
     
     render() {
-        const { project } = this.state;
+        const { project, cover } = this.state;
 
+        console.log(project);
         return (
             <div className="ui container">                
                 <div className="ui padded segment">
@@ -70,6 +86,8 @@ export default class Project extends React.Component {
                 <div className="ui violet labeled icon button" onClick={() => window.location.replace('/project/'+project.id+'/edit')}><i className="cog icon"></i> Editar proyecto</div>
                 <div className="ui basic red button" onClick={this.deleteProject}>Borrar proyecto</div>
 
+                <img src={cover} alt="Project cover "/>
+                
                 </div>
                 
                 <PageCardList project={project} />
