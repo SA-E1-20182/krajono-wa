@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Dropdown } from 'semantic-ui-react'
-// import axios, { post } from 'axios'
+import { post } from 'axios';
 
 const genreOptions = [  // TODO: there ought to be some collection of these somewhere!
   { key: 'action', text: 'Acción', value: 'Acción' },
@@ -8,7 +9,7 @@ const genreOptions = [  // TODO: there ought to be some collection of these some
   { key: 'historical', text: 'Histórico', value: 'Histórico' },
 ]
 
-export default class CreateProject extends React.Component {
+class CreateProject extends React.Component {
     constructor() {
         super();
 
@@ -16,7 +17,7 @@ export default class CreateProject extends React.Component {
             name: '',
             genre: '',
             description: '',
-            cover_url: null
+            cover: null
         }
 
         this.createProject = this.createProject.bind(this);
@@ -26,30 +27,42 @@ export default class CreateProject extends React.Component {
         // this.fileUpload = this.fileUpload.bind(this)
     }
 
+    componentWillMount() {
+        if(!this.props.userId)  window.location.replace('/login');
+    }
+
     createProject(e) {
         e.preventDefault();
-        const { name, genre, description, cover_url } = this.state;
-        const author_id = "author_id";  // TODO:
-        const query =  `mutation CreateProject($input: ProjectInput!) {
-            createProject(project: $input) {
-                id
-                name
-            }
-        }`
+        const { cover } = this.state;
 
-        fetch(process.env.REACT_APP_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                query,
-                variables: {
-                    input: {
-                        name, genre, description, author_id, cover_url
-                    }
+        this.fileUpload(cover)
+        .then((response)=>{
+            const cover_url = response.data;
+            console.log(cover_url);
+            const { name, genre, description } = this.state;
+
+            const author_id = "author_id";  // TODO:
+            const query =  `mutation CreateProject($input: ProjectInput!) {
+                createProject(project: $input) {
+                    id
+                    name
                 }
+            }`
+    
+            return fetch(process.env.REACT_APP_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    query,
+                    variables: {
+                        input: {
+                            name, genre, description, author_id, cover_url
+                        }
+                    }
+                })
             })
         })
         .then(r => {console.log(r); return r.json()})
@@ -59,22 +72,18 @@ export default class CreateProject extends React.Component {
 
             window.location.replace('/project/' + payload.id);
         })
-        // this.fileUpload(cover_url).then((response)=>{
-        //   console.log(response.data);
-        // })
     }
 
-    // fileUpload(file){
-    //   const url = 'http://192.168.99.101:3003/image';
-    //   const formData = new FormData();
-    //   formData.append('file',file)
-    //   const config = {
-    //       headers: {
-    //           'content-type': 'multipart/form-data'
-    //       }
-    //   }
-    //   return  post(url, formData,config)
-    // }
+    fileUpload(file) {
+      const formData = new FormData();
+      formData.append('file',file)
+      const config = {
+          headers: {
+              'content-type': 'multipart/form-data'
+          }
+      }
+      return  post(process.env.REACT_APP_IMAGE_URL, formData,config)
+    }
 
     handleInputChange(e) {
         const { name, value } = e.target;
@@ -86,11 +95,11 @@ export default class CreateProject extends React.Component {
     }
 
     handleFileChange(event) {
-        this.setState({ cover_url: event.target.files[0] });
+        this.setState({ cover: event.target.files[0] });
     }
 
     render() {
-        const { genre, cover_url } = this.state;
+        const { genre, cover } = this.state;
         return (
             <div className="ui container">
                 <div className="ui very padded segment">
@@ -116,7 +125,7 @@ export default class CreateProject extends React.Component {
 
                         <div className="field">
                             <input type="file" onChange={this.handleFileChange} />
-                            <img src={cover_url ? URL.createObjectURL(cover_url) : ""} alt=""/>
+                            <img src={cover ? URL.createObjectURL(cover) : ""} alt=""/>
                         </div>
 
                         <button className="ui button" type="submit">Submit</button>
@@ -126,3 +135,9 @@ export default class CreateProject extends React.Component {
         );
     }
 }
+
+export default connect((store) => {
+    return {
+        userId: store.currentUser.token
+    };
+})(CreateProject);

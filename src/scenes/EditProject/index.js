@@ -133,7 +133,6 @@ export default class EditProject extends React.Component {
     }
 
     fileUpload(file){
-      const url = 'http://192.168.99.101:3003/image';
       const formData = new FormData();
       formData.append('file',file)
       const config = {
@@ -141,7 +140,7 @@ export default class EditProject extends React.Component {
               'content-type': 'multipart/form-data'
           }
       }
-      return post(url, formData,config)
+      return post(process.env.REACT_APP_IMAGE_URL, formData,config)
     }
 
     render() {

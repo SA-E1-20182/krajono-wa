@@ -13,12 +13,11 @@ class Home extends React.Component {
     }
 
     componentWillMount() {
-        if(!this.props.userId)
+        if(!this.props.token)
             window.location.replace("/login");
     }
 
-    componentDidMount() {
-        console.log(this.props);
+    componentDidMount() {   
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -59,11 +58,12 @@ class Home extends React.Component {
 
     render() {
         const { projects, covers } = this.state;
+        const { username } = this.props;
 
         return (
             <div className="ui container" id="home">
                 <div className="ui violet padded segment">    
-                    <h1 className="ui header">Bienvenido, user</h1>
+                    <h1 className="ui header">Bienvenido, {username}</h1>
 
                     <button className="ui basic violet button" onClick={() => window.location.replace('/project/create')}>
                         <i className="plus circle icon"></i>
@@ -81,7 +81,7 @@ class Home extends React.Component {
 
 export default connect((store) => {
     return {
-        userId: store.currentUser,
-        loggedIn: store.loggedIn
+        token: store.currentUser.token,
+        username: store.currentUser.username
     };
 })(Home);

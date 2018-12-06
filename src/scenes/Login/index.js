@@ -9,11 +9,16 @@ class Login extends React.Component {
 
       this.state = {
           email: '',
-          password: ''
+          password: '',
+          error: false
       }
 
       this.handleInputChange = this.handleInputChange.bind(this);
       this.authenticate = this.authenticate.bind(this)
+  }
+
+  componentWillMount() {
+    if(this.props.userId)   window.location.replace("/");
   }
 
   handleInputChange(e) {
@@ -21,40 +26,65 @@ class Login extends React.Component {
       this.setState({ [name]: value });
   }
 
-  authenticate(){
-      const { email, password } = this.state;
-      const query =  `mutation CreateSession($input: SessionInput!) {
-          createSession(auth: $input) {
-              jwt
-          }
-      }`
+    authenticate(){
+        const { email, password } = this.state;
+        const query =  `mutation CreateSession($input: SessionInput!) {
+            createSession(auth: $input) {
+                jwt
+            }
+        }`
+        let token = '';
 
-      fetch(process.env.REACT_APP_API_URL, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-              query,
-              variables: {
-                input: {
-                    auth: {
-                        email, password
+        fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                query,
+                variables: {
+                    input: {
+                        auth: {
+                            email, password
+                        }
                     }
                 }
-              }
-          })
-      })
-      .then(r => {console.log(r); return r.json()})
-      .then(data => {
-          this.props.dispatch(login(data.data.createSession.jwt));
-      })
-  }
+            })
+        })
+        .then(r => {console.log(r); return r.json()})
+        .then(data => {
+                if(!data.data) {
+                    console.error(data);
+                    this.setState({ error: true });
+                } else {
+                    const user = data.data.createSession;
+                    token = user.jwt;
+                    console.log(token);
+
+                    fetch(process.env.REACT_APP_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': token,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ query: `{ checkSession(token: { token: "${token}") } { id, username } }`}),
+                    }).then(data => {
+                        console.log(data);
+                        const username = data.msg;
+                        
+                        this.props.dispatch(login({ 
+                            username, token
+                        }));
+
+                        window.location.replace('/');
+                    }).catch(error => console.error(error));
+            }
+        })
+    }
 
     render() {
-        console.log(this.props.userId);
-        if(this.props.userId)   window.location.replace("/");
+        const { error } = this.state;
 
         return (
             <div className="ui container">
@@ -75,9 +105,15 @@ class Login extends React.Component {
                         <button className="ui violet button" onClick={this.authenticate}>Ingresar</button>
                     </div>
 
+                    { error ? 
+                    <div className="ui error message">
+                        <p>Ups! Ocurrió un error. Inténtalo de nuevo.</p>
+                    </div>
+                    :
                     <div className="ui warning message">
                         <p>¿No tienes una cuenta aún? <a href="/signup">Regístrate</a>.</p>
                     </div>
+                    }
                 </div>
             </div>
         );
@@ -86,6 +122,6 @@ class Login extends React.Component {
 
 export default connect((store) => {
     return {
-        userId: store.currentUser
+        userId: store.currentUser.token
     };
 })(Login);

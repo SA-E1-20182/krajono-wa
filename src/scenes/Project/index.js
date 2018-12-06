@@ -69,6 +69,7 @@ export default class Project extends React.Component {
             .then(data => {
                 this.setState({ cover: data.data.imageByCode });
             })
+            .catch(error => console.error(error))
         });
     }
     

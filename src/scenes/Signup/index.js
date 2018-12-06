@@ -11,7 +11,8 @@ class Signup extends React.Component {
             username: '',
             password: '',
             repeatPassword: '',
-            email: ''
+            email: '',
+            success: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,11 +31,55 @@ class Signup extends React.Component {
     }
 
     signup() {
-        console.log("signup");
+        const { email, password, username } = this.state;
+        console.log(email, password, username);
+        const query =  `mutation CreateUser($input: UserInput!) {
+            createUser(user: $input) {
+                email
+            }
+        }`
+
+        fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                query,
+                variables: {
+                    input: {
+                        email, password, username
+                    }
+                }
+            })
+        })
+        .then(r => {console.log(r); return r.json()})
+        .then(data => {
+            if(data.data) {
+                this.setState({ success: true });
+            } else {
+                console.log(data);
+            }
+        }).catch(error => console.error(error));
     }
 
     render() {
-        console.log(this.state);
+        const { success } = this.state;
+
+        if(success)
+            return (
+                <div className="ui container">
+                    <div id="signupSegment" className="ui center aligned very padded segment">
+                        <h1 className="ui header">Registrarse en Krajono</h1>
+
+                        <div className="ui success message">
+                            <div className="header">Tu usuario fue creado con éxito!</div>
+                            <p>Ahora <a href="/login">haz clic aquí</a> para poder iniciar sesión.</p>
+                        </div>
+                    </div>
+                </div>
+            );
 
         return (
             <div className="ui container">
@@ -56,7 +101,7 @@ class Signup extends React.Component {
                         </div>
                         <div className="field">
                             <label>Repetir contraseña</label>
-                            <input type="password" name="password" onChange={this.handleInputChange}/>
+                            <input type="password" name="repeatPassword" onChange={this.handleInputChange}/>
                         </div>
 
                         <div className="ui violet button" onClick={this.signup}>Registrarse</div>

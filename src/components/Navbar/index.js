@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
+import { connect } from 'react-redux';
 
-export default class Navbar extends Component {
+import { logout } from '../../services/session/actions';
+
+class Navbar extends Component {
   render() {
+    const { userId } = this.props;
+
     return (
       <div>
         <Menu size="huge" pointing secondary>
@@ -16,17 +21,39 @@ export default class Navbar extends Component {
             onClick={this.handleItemClick}
           />
           <Menu.Menu position='right'>
-            <Menu.Item
-              name='perfil'
-              onClick={() => window.location.replace('/author/1')}
-            />
-            <Menu.Item
-              name='Ingresar'
-              onClick={() => window.location.replace('/login')}
-            />
+            { userId ? 
+                <Menu.Item
+                  name='Perfil'
+                  onClick={() => window.location.replace('/author/1')}
+                />
+              :
+                <Menu.Item
+                  name='Registrarse'
+                  onClick={() => window.location.replace('/signup')}
+                />
+            }
+            
+            { userId ? 
+                <Menu.Item
+                  name='Logout'
+                  onClick={() => { this.props.dispatch(logout()); window.location.replace('/'); }}
+                />
+              :
+                <Menu.Item
+                  name='Ingresar'
+                  onClick={() => window.location.replace('/login')}
+                />
+            }
           </Menu.Menu>
         </Menu>
       </div>
     )
   }
 }
+
+export default connect((store) => {
+  return {
+      userId: store.currentUser.token,
+      loggedIn: store.loggedIn
+  };
+})(Navbar);
