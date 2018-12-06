@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Home from './scenes/Home';
 import Auth from './scenes/Auth';
+import Signup from './scenes/Signup';
 import Project from './scenes/Project';
 import NotFound from './scenes/NotFound';
 import Page from './scenes/Page';
@@ -30,6 +31,7 @@ ReactDOM.render(
                     <Route exact path="/project/create" component={CreateProject} />
                     <Route exact path="/project/:id" component={Project} />
                     <Route exact path="/project/:id/edit" component={EditProject} />
+                    <Route exact path="/signup" component={Signup} />
                     <Route exact path="/version/add" component={AddVersion} />
                     <Route exact path="/version/:id" component={Project} />
                     <Route exact path="/project/:id/page/:num" component={Page} />

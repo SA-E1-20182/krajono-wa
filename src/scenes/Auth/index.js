@@ -67,6 +67,10 @@ export default class Auth extends React.Component {
 
                         <button className="ui violet button" onClick={this.authenticate}>Ingresar</button>
                     </div>
+
+                    <div className="ui warning message">
+                        <p>¿No tienes una cuenta aún? <a href="/signup">Regístrate</a>.</p>
+                    </div>
                 </div>
             </div>
         );
