@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import ProjectCardList from '../../components/ProjectCardList';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
     constructor() {
         super();
 
@@ -11,6 +13,12 @@ export default class Home extends React.Component {
     }
 
     componentWillMount() {
+        if(!this.props.userId)
+            window.location.replace("/login");
+    }
+
+    componentDidMount() {
+        console.log(this.props);
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -45,15 +53,12 @@ export default class Home extends React.Component {
             }).then(r => r.json())
             .then(data => {
                 this.setState({covers: data.data.collectionOfImages})
-            });
+            }).catch(error => console.error(error));
         });
     }
 
     render() {
         const { projects, covers } = this.state;
-        console.log(projects);
-
-        // window.location.replace("/auth");
 
         return (
             <div className="ui container" id="home">
@@ -73,3 +78,10 @@ export default class Home extends React.Component {
         );
     }
 }
+
+export default connect((store) => {
+    return {
+        userId: store.currentUser,
+        loggedIn: store.loggedIn
+    };
+})(Home);

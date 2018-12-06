@@ -22,7 +22,7 @@ export default class Navbar extends Component {
             />
             <Menu.Item
               name='Ingresar'
-              onClick={() => window.location.replace('/auth')}
+              onClick={() => window.location.replace('/login')}
             />
           </Menu.Menu>
         </Menu>

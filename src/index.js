@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 
 import Home from './scenes/Home';
-import Auth from './scenes/Auth';
+import Login from './scenes/Login';
 import Signup from './scenes/Signup';
 import Project from './scenes/Project';
 import NotFound from './scenes/NotFound';
@@ -33,8 +33,8 @@ ReactDOM.render((
                 <main>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/auth" component={Auth} />
                         <Route exact path="/author/:id" component={Profile} />
+                        <Route exact path="/login" component={Login} />
                         <Route exact path="/project/create" component={CreateProject} />
                         <Route exact path="/project/:id" component={Project} />
                         <Route exact path="/project/:id/edit" component={EditProject} />

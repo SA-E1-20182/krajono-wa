@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { login } from '../../services/session/actions';
 
-export default class Auth extends React.Component {
+class Login extends React.Component {
 
   constructor() {
       super();
@@ -21,9 +23,9 @@ export default class Auth extends React.Component {
 
   authenticate(){
       const { email, password } = this.state;
-      const query =  `mutation Auth($input: AuthInput!) {
-          auth(auth: $input) {
-              answer
+      const query =  `mutation CreateSession($input: SessionInput!) {
+          createSession(auth: $input) {
+              jwt
           }
       }`
 
@@ -36,19 +38,24 @@ export default class Auth extends React.Component {
           body: JSON.stringify({
               query,
               variables: {
-                input:{
-                  email, password
+                input: {
+                    auth: {
+                        email, password
+                    }
                 }
               }
           })
       })
       .then(r => {console.log(r); return r.json()})
       .then(data => {
-          console.log(data.data);
+          this.props.dispatch(login(data.data.createSession.jwt));
       })
   }
 
     render() {
+        console.log(this.props.userId);
+        if(this.props.userId)   window.location.replace("/");
+
         return (
             <div className="ui container">
                 <div className="ui center aligned segment">
@@ -56,8 +63,8 @@ export default class Auth extends React.Component {
 
                     <div className="ui form">
                         <div className="field">
-                            <label>Nombre de usuario</label>
-                            <input type="text" name="email" onChange={this.handleInputChange}/>
+                            <label>Correo electrónico</label>
+                            <input type="email" name="email" onChange={this.handleInputChange}/>
                         </div>
 
                         <div className="field">
@@ -76,3 +83,9 @@ export default class Auth extends React.Component {
         );
     }
 }
+
+export default connect((store) => {
+    return {
+        userId: store.currentUser
+    };
+})(Login);
