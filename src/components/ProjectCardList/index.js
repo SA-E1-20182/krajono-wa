@@ -7,7 +7,7 @@ export default class ProjectCardList extends React.Component {
         console.log(covers);
         return (<div className="ui three cards">
             {(() => {
-                const cards = projects.map((project, index) => <ProjectCard key={index} project={project} cover={covers[index]}/>);
+                const cards = projects.map((project, index) => <ProjectCard key={index} project={project} cover={covers ? covers[index] : ''}/>);
                 return cards;
             })()}
         </div>)

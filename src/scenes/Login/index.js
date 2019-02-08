@@ -28,6 +28,12 @@ class Login extends React.Component {
 
     authenticate(){
         const { email, password } = this.state;
+        const authQuery = `mutation Auth($input: AuthInput!) {
+            auth(auth: $input) {
+                answer
+            }
+        }`
+
         const query =  `mutation CreateSession($input: SessionInput!) {
             createSession(auth: $input) {
                 jwt
@@ -42,45 +48,67 @@ class Login extends React.Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                query,
+                query: authQuery,
                 variables: {
                     input: {
-                        auth: {
-                            email, password
-                        }
+                        email, password
                     }
                 }
             })
-        })
-        .then(r => {console.log(r); return r.json()})
+        }).then(r => r.json())
         .then(data => {
-                if(!data.data) {
-                    console.error(data);
-                    this.setState({ error: true });
-                } else {
-                    const user = data.data.createSession;
-                    token = user.jwt;
-                    console.log(token);
-
-                    fetch(process.env.REACT_APP_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': token,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ query: `{ checkSession(token: { token: "${token}") } { id, username } }`}),
-                    }).then(data => {
-                        console.log(data);
-                        const username = data.msg;
-                        
-                        this.props.dispatch(login({ 
-                            username, token
-                        }));
-
-                        window.location.replace('/');
-                    }).catch(error => console.error(error));
+            console.log(data);
+            if(data.data && data.data.auth.answer === "2") {
+                fetch(process.env.REACT_APP_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query,
+                        variables: {
+                            input: {
+                                auth: {
+                                    email, password
+                                }
+                            }
+                        }
+                    })
+                })
+                .then(r => {console.log(r); return r.json()})
+                .then(data2 => {
+                    if(!data2.data) {
+                        console.error(data2);
+                        this.setState({ error: true });
+                    } else {
+                        const user = data2.data.createSession;
+                        token = user.jwt;
+                        console.log(token);
+    
+                        fetch(process.env.REACT_APP_API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': token,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ query: `{ checkSession(token: { token: "${token}") } { id, username } }`}),
+                        }).then(data => {
+                            console.log(data);
+                            const username = data.msg;
+                            
+                            this.props.dispatch(login({ 
+                                username, token
+                            }));
+    
+                            window.location.replace('/');
+                        }).catch(error => console.error(error));
+                    }
+                })
+            } else {
+                this.setState({ error: true })
             }
-        })
+        });
     }
 
     render() {

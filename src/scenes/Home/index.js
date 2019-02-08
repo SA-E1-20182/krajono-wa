@@ -59,11 +59,12 @@ class Home extends React.Component {
     render() {
         const { projects, covers } = this.state;
         const { username } = this.props;
+        console.log(this.props.token);
 
         return (
             <div className="ui container" id="home">
                 <div className="ui violet padded segment">    
-                    <h1 className="ui header">Bienvenido, {username}</h1>
+                    <h1 className="ui header">¡Bienvenido!</h1>
 
                     <button className="ui basic violet button" onClick={() => window.location.replace('/project/create')}>
                         <i className="plus circle icon"></i>
@@ -72,7 +73,7 @@ class Home extends React.Component {
                 </div>
 
                 <div className="ui segment">
-                    {projects && covers ? <ProjectCardList projects={projects} covers={covers} /> : ''}
+                    {projects ? <ProjectCardList projects={projects} covers={covers} /> : ''}
                 </div>
             </div>
         );
