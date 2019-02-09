@@ -28,10 +28,10 @@ export default class Project extends React.Component {
 
         fetch(process.env.REACT_APP_API_URL, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 query,
                 variables: {
                     input: id
@@ -41,7 +41,7 @@ export default class Project extends React.Component {
         .then(r => {console.log(r); return r.json()})
         .then(data => {
             window.location.replace('/');
-        })  
+        })
     }
 
     componentWillMount() {
@@ -59,26 +59,41 @@ export default class Project extends React.Component {
             this.setState({ project });
 
             const { cover_url } = project;
-            
-            fetch(process.env.REACT_APP_API_URL, {
+
+            console.log(cover_url)
+
+            fetch(process.env.REACT_APP_IMAGE_URL+'/'+cover_url, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(r => console.error(r))
+            .then(data => {
+              console.log(data)
+                this.setState({ cover: data.imageByCode });
+            })
+            .catch(error => console.error(error))
+
+            /*fetch(process.env.REACT_APP_API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: `{ imageByCode(code: ${cover_url}) }` }),
             })
-            .then(r => r.json())
+            .then(r => console.error(r))
             .then(data => {
-                this.setState({ cover: data.data.imageByCode });
+              console.log(data)
+                this.setState({ cover: data.imageByCode });
             })
-            .catch(error => console.error(error))
+            .catch(error => console.error(error))*/
         });
     }
-    
+
     render() {
         const { project, cover } = this.state;
 
         console.log(project);
+        console.log(cover);
         return (
-            <div className="ui container">                
+            <div className="ui container">
                 <div className="ui padded segment">
                     <h1 className="ui header">Proyecto: <i>{project.name}</i>
                         <div className="sub header">creado por <a href="/author/1">José Vitola</a> el 03 de diciembre de 2018</div>
@@ -88,9 +103,9 @@ export default class Project extends React.Component {
                 <div className="ui basic red button" onClick={this.deleteProject}>Borrar proyecto</div>
 
                 <img src={cover} alt="Project cover "/>
-                
+
                 </div>
-                
+
                 <PageCardList project={project} />
             </div>
         );
