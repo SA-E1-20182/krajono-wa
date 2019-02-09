@@ -58,7 +58,6 @@ class Home extends React.Component {
 
     render() {
         const { projects, covers } = this.state;
-        const { username } = this.props;
         console.log(this.props.token);
 
         return (

@@ -12,14 +12,6 @@ class Navbar extends Component {
       <div>
         <Menu size="huge" pointing secondary>
           <Menu.Item name='krajono' onClick={() => window.location.replace('/')} />
-          <Menu.Item
-            name='messages'
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name='friends'
-            onClick={this.handleItemClick}
-          />
           <Menu.Menu position='right'>
             { userId ? 
                 <Menu.Item
