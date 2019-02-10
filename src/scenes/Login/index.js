@@ -57,8 +57,7 @@ class Login extends React.Component {
             })
         }).then(r => r.json())
         .then(data => {
-            console.log(data);
-            if(data.data && data.data.auth.answer === "2") {
+            if(data.data && data.data.auth.answer === "1") {
                 fetch(process.env.REACT_APP_API_URL, {
                     method: 'POST',
                     headers: {
@@ -76,7 +75,7 @@ class Login extends React.Component {
                         }
                     })
                 })
-                .then(r => {console.log(r); return r.json()})
+                .then(r => r.json())
                 .then(data2 => {
                     if(!data2.data) {
                         console.error(data2);
@@ -84,7 +83,6 @@ class Login extends React.Component {
                     } else {
                         const user = data2.data.createSession;
                         token = user.jwt;
-                        console.log(token);
     
                         fetch(process.env.REACT_APP_API_URL, {
                             method: 'POST',
@@ -94,7 +92,6 @@ class Login extends React.Component {
                             },
                             body: JSON.stringify({ query: `{ checkSession(token: { token: "${token}") } { id, username } }`}),
                         }).then(data => {
-                            console.log(data);
                             const username = data.msg;
                             
                             this.props.dispatch(login({ 
