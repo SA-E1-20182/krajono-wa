@@ -123,10 +123,10 @@ class CreateProject extends React.Component {
                             <textarea name="description" placeholder="Descripción" rows="2" onChange={this.handleInputChange}></textarea>
                         </div>
 
-                        <div className="field">
+                        {/* <div className="field">
                             <input type="file" onChange={this.handleFileChange} />
                             <img src={cover ? URL.createObjectURL(cover) : ""} alt=""/>
-                        </div>
+                        </div> */}
 
                         <button className="ui button" type="submit">Submit</button>
                     </form>
