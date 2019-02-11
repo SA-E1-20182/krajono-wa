@@ -24,7 +24,7 @@ class CreateProject extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.handleFileChange = this.handleFileChange.bind(this);
-        // this.fileUpload = this.fileUpload.bind(this)
+        this.fileUpload = this.fileUpload.bind(this)
     }
 
     componentWillMount() {
