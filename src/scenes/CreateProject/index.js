@@ -35,34 +35,30 @@ class CreateProject extends React.Component {
         e.preventDefault();
         const { cover } = this.state;
 
-        this.fileUpload(cover)
-        .then((response)=>{
-            const cover_url = response.data;
-            console.log(cover_url);
-            const { name, genre, description } = this.state;
+        const { name, genre, description } = this.state;
+        const cover_url = '';
 
-            const author_id = "author_id";  // TODO:
-            const query =  `mutation CreateProject($input: ProjectInput!) {
-                createProject(project: $input) {
-                    id
-                    name
-                }
-            }`
-    
-            return fetch(process.env.REACT_APP_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    query,
-                    variables: {
-                        input: {
-                            name, genre, description, author_id, cover_url
-                        }
+        const author_id = "author_id";  // TODO:
+        const query =  `mutation CreateProject($input: ProjectInput!) {
+            createProject(project: $input) {
+                id
+                name
+            }
+        }`
+
+        fetch(process.env.REACT_APP_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                query,
+                variables: {
+                    input: {
+                        name, genre, description, author_id, cover_url
                     }
-                })
+                }
             })
         })
         .then(r => {console.log(r); return r.json()})
@@ -72,6 +68,44 @@ class CreateProject extends React.Component {
 
             window.location.replace('/project/' + payload.id);
         })
+
+        // this.fileUpload(cover)
+        // .then((response)=>{
+        //     const cover_url = response.data;
+        //     console.log(cover_url);
+        //     const { name, genre, description } = this.state;
+
+        //     const author_id = "author_id";  // TODO:
+        //     const query =  `mutation CreateProject($input: ProjectInput!) {
+        //         createProject(project: $input) {
+        //             id
+        //             name
+        //         }
+        //     }`
+    
+        //     return fetch(process.env.REACT_APP_API_URL, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Accept': 'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             query,
+        //             variables: {
+        //                 input: {
+        //                     name, genre, description, author_id, cover_url
+        //                 }
+        //             }
+        //         })
+        //     })
+        // })
+        // .then(r => {console.log(r); return r.json()})
+        // .then(data => {
+        //     console.log(data.data);
+        //     const payload = data.data.createProject;
+
+        //     window.location.replace('/project/' + payload.id);
+        // })
     }
 
     fileUpload(file) {
