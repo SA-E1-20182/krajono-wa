@@ -37,8 +37,8 @@ class CreateProject extends React.Component {
 
         this.fileUpload(cover)
         .then((response)=>{
-            const cover_url = response.data;
-            console.log(cover_url);
+            //const cover_url = response.data;
+            //console.log(cover_url);
             const { name, genre, description } = this.state;
 
             const author_id = "author_id";  // TODO:
@@ -48,7 +48,7 @@ class CreateProject extends React.Component {
                     name
                 }
             }`
-    
+
             return fetch(process.env.REACT_APP_API_URL, {
                 method: 'POST',
                 headers: {
@@ -59,7 +59,7 @@ class CreateProject extends React.Component {
                     query,
                     variables: {
                         input: {
-                            name, genre, description, author_id, cover_url
+                            name, genre, description, author_id
                         }
                     }
                 })
@@ -75,14 +75,15 @@ class CreateProject extends React.Component {
     }
 
     fileUpload(file) {
-      const formData = new FormData();
+      /*const formData = new FormData();
       formData.append('file',file)
       const config = {
           headers: {
               'content-type': 'multipart/form-data'
           }
       }
-      return  post(process.env.REACT_APP_IMAGE_URL, formData,config)
+      return  post(process.env.REACT_APP_IMAGE_URL, formData,config)*/
+      console.log("no sube fotos")
     }
 
     handleInputChange(e) {
