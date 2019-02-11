@@ -24,7 +24,7 @@ class CreateProject extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.handleFileChange = this.handleFileChange.bind(this);
-        // this.fileUpload = this.fileUpload.bind(this)
+        this.fileUpload = this.fileUpload.bind(this)
     }
 
     componentWillMount() {
@@ -109,14 +109,15 @@ class CreateProject extends React.Component {
     }
 
     fileUpload(file) {
-      const formData = new FormData();
+      /*const formData = new FormData();
       formData.append('file',file)
       const config = {
           headers: {
               'content-type': 'multipart/form-data'
           }
       }
-      return  post(process.env.REACT_APP_IMAGE_URL, formData,config)
+      return  post(process.env.REACT_APP_IMAGE_URL, formData,config)*/
+      console.log("no sube fotos")
     }
 
     handleInputChange(e) {
