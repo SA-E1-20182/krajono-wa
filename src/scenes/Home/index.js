@@ -71,9 +71,9 @@ class Home extends React.Component {
                     </button>
                 </div>
 
-                <div className="ui segment">
+                {/* <div className="ui segment">
                     {projects ? <ProjectCardList projects={projects} covers={covers} /> : ''}
-                </div>
+                </div> */}
             </div>
         );
     }
